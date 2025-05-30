@@ -26,9 +26,11 @@ class ImageModel {
   factory ImageModel.fromJson(Map<String, dynamic> json) => ImageModel(
     page: json["page"],
     perPage: json["per_page"],
-    photos: List<Photo>.from(json["photos"].map((x) => Photo.fromJson(x))),
+    photos: json["photos"] != null
+        ? List<Photo>.from(json["photos"].map((x) => Photo.fromJson(x)))
+        : [],
     totalResults: json["total_results"],
-    nextPage: json["next_page"],
+    nextPage: json["next_page"] ?? '',
   );
 
   Map<String, dynamic> toJson() => {
@@ -71,14 +73,14 @@ class Photo {
     id: json["id"],
     width: json["width"],
     height: json["height"],
-    url: json["url"],
-    photographer: json["photographer"],
-    photographerUrl: json["photographer_url"],
+    url: json["url"] ?? '',
+    photographer: json["photographer"] ?? '',
+    photographerUrl: json["photographer_url"] ?? '',
     photographerId: json["photographer_id"],
-    avgColor: json["avg_color"],
+    avgColor: json["avg_color"] ?? '',
     src: Src.fromJson(json["src"]),
     liked: json["liked"],
-    alt: json["alt"],
+    alt: json["alt"] ?? '',
   );
 
   Map<String, dynamic> toJson() => {
