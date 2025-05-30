@@ -74,13 +74,13 @@ class Mainscreen extends StatelessWidget {
             body: cubit.navigationPage == 1
                 ? Homepage()
                 : cubit.navigationPage == 2
-                    ? Searchpage(
-                        controller: cubit.searchController,
-                        searchResult: () {
-                          cubit.getSearchImage();
-                        },
-                      )
-                    : Text("something wrong"),
+                ? Searchpage(
+              controller: cubit.searchController,
+              searchResult: () {
+                cubit.getSearchImage();
+              },
+            )
+                : Text("something wrong"),
           ),
         );
       },

@@ -57,7 +57,6 @@
           });
 
           if(response.statusCode==200){
-            print("success");
             final data =imageModelFromJson(response.body);
             final newData =data.photos.map((photo){
               return{
@@ -75,7 +74,6 @@
             emit(ImageLoaded());
           }else{
             isPaginationLoading =false;
-            print("error");
           }
         }
 
@@ -113,8 +111,6 @@
                 });
 
             if(response.statusCode==200){
-              print("success search");
-              print(response.body);
               final Searchdata =imageModelFromJson(response.body);
               final newSearchData =Searchdata.photos.map((photo){
                 return{
@@ -132,7 +128,7 @@
               emit(ImageLoaded());
             }else{
               isPaginationLoading=false;
-              print("error");
             }
           }
+
         }

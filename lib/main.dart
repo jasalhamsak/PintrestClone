@@ -1,28 +1,27 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pintrestcloneapk/Presentation/MainScreen/cubit/main_screen_cubit.dart';
-
-import 'Presentation/MainScreen/components/MainScreen.dart';
+import 'package:pintrestcloneapk/Presentation/SplashScreen/Components/Splash.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(
+    BlocProvider(
+      create: (context) => MainScreenCubit()..getImage(),
+      child: const MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Pintrest Clone By j',
+      title: 'Pinterest Clone By j',
       debugShowCheckedModeBanner: false,
       theme: ThemeData.dark(),
-      home: BlocProvider(
-        create: (context) => MainScreenCubit(),
-        child: Mainscreen(),
-      ),
+      home: const Splash(),
     );
   }
 }
-
