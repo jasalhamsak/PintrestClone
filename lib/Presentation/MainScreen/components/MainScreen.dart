@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:pintrestcloneapk/Presentation/MainScreen/Resources/Pages/HomePage.dart';
-import 'package:pintrestcloneapk/Presentation/MainScreen/Resources/Pages/SearchPage.dart';
+import 'package:pintrestcloneapk/Presentation/MainScreen/Resources/Pages/HomePage/HomePage.dart';
+import 'package:pintrestcloneapk/Presentation/MainScreen/Resources/Pages/SearchPage/SearchPage.dart';
 import 'package:pintrestcloneapk/Presentation/MainScreen/cubit/main_screen_cubit.dart';
 
 import '../Resources/TopBar.dart';

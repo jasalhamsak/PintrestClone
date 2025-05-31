@@ -24,6 +24,8 @@
         bool get isScrollListenerAdded => _scrollListenerAdded;
         final searchController =TextEditingController();
         bool searched = false;
+        bool wantToSearch = false;
+        int currentSearchViewIndex =1;
 
 
         void changePage(int pageNumber){
@@ -129,6 +131,23 @@
             }else{
               isPaginationLoading=false;
             }
+          }
+
+
+
+
+          void changeSearchViewIndex(int index){
+            currentSearchViewIndex = index;
+            emit(SearchViewChanged());
+          }
+
+          void changeSearchedState(isSearched){
+          searched = isSearched;
+          emit(IsSearched());
+          }
+          void isWantToSearch(isWantToSearch){
+          wantToSearch = isWantToSearch;
+          emit(IsWantToSearch());
           }
 
         }
