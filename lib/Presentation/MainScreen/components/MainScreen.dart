@@ -4,6 +4,7 @@ import 'package:pintrestcloneapk/Presentation/MainScreen/Resources/Pages/HomePag
 import 'package:pintrestcloneapk/Presentation/MainScreen/Resources/Pages/SearchPage/SearchPage.dart';
 import 'package:pintrestcloneapk/Presentation/MainScreen/cubit/main_screen_cubit.dart';
 
+import '../Resources/Pages/Add/AddTab.dart';
 import '../Resources/TopBar.dart';
 
 class Mainscreen extends StatelessWidget {
@@ -45,7 +46,9 @@ class Mainscreen extends StatelessWidget {
                         size: 30,
                       )),
                   IconButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        showAddTabModal(context);
+                      },
                       icon: Icon(
                         Icons.add,
                         color: Colors.white,

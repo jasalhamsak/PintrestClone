@@ -106,7 +106,7 @@ class _SearchpageState extends State<Searchpage> {
                   final cubit = context.read<MainScreenCubit>();
 
                   return cubit.wantToSearch?
-                  Text("Rcent Searches"):
+                  Text("Recent Searches"):
                   cubit.searched
                       ? ImageMasonryGrid(
                           imageList: cubit.SearchimageData,
