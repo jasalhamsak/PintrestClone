@@ -39,6 +39,9 @@ class Mainscreen extends StatelessWidget {
                   IconButton(
                       onPressed: () {
                         cubit.changePage(2);
+                        cubit.searched =false;
+                        cubit.searchController.clear();
+
                       },
                       icon: Icon(
                         Icons.search,
