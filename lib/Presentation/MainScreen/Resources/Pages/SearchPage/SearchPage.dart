@@ -25,17 +25,14 @@ class Searchpage extends StatefulWidget {
 class _SearchpageState extends State<Searchpage> {
   final FocusNode focusNode = FocusNode();
 
-
   @override
   Widget build(BuildContext context) {
-
     return BlocSelector<MainScreenCubit, MainScreenState, int>(
       selector: (state) {
         return context.read<MainScreenCubit>().currentSearchViewIndex;
       },
       builder: (context, selectedIndex) {
         final cubit = context.read<MainScreenCubit>();
-
 
         focusNode.addListener(() {
           if (focusNode.hasFocus) {
@@ -85,6 +82,7 @@ class _SearchpageState extends State<Searchpage> {
                       },
                       onFieldSubmitted: (value) {
                         widget.searchResult();
+                        cubit.addItemToRecentList(value.trim());
                         cubit.isWantToSearch(false);
                       },
                     ),
@@ -97,7 +95,6 @@ class _SearchpageState extends State<Searchpage> {
                               widget.controller.clear();
                               cubit.isWantToSearch(false);
                               focusNode.unfocus();
-                              // context.read<MainScreenCubit>().changeSearchedState(false);
                             },
                             child: Text(
                               "cancel",
@@ -112,16 +109,55 @@ class _SearchpageState extends State<Searchpage> {
               child: BlocBuilder<MainScreenCubit, MainScreenState>(
                 builder: (context, state) {
                   final cubit = context.read<MainScreenCubit>();
-
+                  cubit.getRecentList();
+                  final recentList = cubit.recentSearches;
                   return cubit.wantToSearch
-                      ? Text("Recent Searches")
+                      ? recentList.isEmpty
+                          ? Center(
+                              child: Text("No recent searches",
+                                  style: TextStyle(color: Colors.white)),
+                            )
+                          : Column(
+                              children: [
+                                Expanded(
+                                  child: ListView.builder(
+                                    itemCount: recentList.length,
+                                    itemBuilder: (context, index) {
+                                      return ListTile(
+                                        title: Align(
+                                          alignment: Alignment.centerLeft,
+                                          child: TextButton(
+                                              onPressed: () {
+                                                widget.controller.text =
+                                                    recentList[index];
+                                                widget.searchResult();
+                                                cubit.isWantToSearch(false);
+                                              },
+                                              child: Text(recentList[index],
+                                                  style: TextStyle(
+                                                      color: Colors.white))),
+                                        ),
+                                        leading: Icon(Icons.search),
+                                        trailing: IconButton(
+                                          icon: Icon(Icons.close,
+                                              color: Colors.white),
+                                          onPressed: () {
+                                            cubit.removeRecentItem(index);
+                                          },
+                                        ),
+                                      );
+                                    },
+                                  ),
+                                ),
+                              ],
+                            )
                       : cubit.searched
                           ? ImageMasonryGrid(
                               imageList: cubit.SearchimageData,
                               scrollController: cubit.scrollController,
                               isLoading: cubit.isPaginationLoading,
-                              onClicked: (imageUrl,alt) {
-                                cubit.isImageClicked(true, imageUrl,alt);
+                              onClicked: (imageUrl, alt) {
+                                cubit.isImageClicked(true, imageUrl, alt);
                               },
                               changeQuery: (query) {
                                 cubit.changeSearchQuery(query);
@@ -134,14 +170,14 @@ class _SearchpageState extends State<Searchpage> {
                           : !cubit.wantToSearch
                               ? Column(
                                   children: [
-                                    Text(
-                                      "Contailners",
-                                      style: TextStyle(color: Colors.white),
-                                    ),
-                                    Text(
-                                      "Contailners",
-                                      style: TextStyle(color: Colors.white),
-                                    ),
+                                    // Text(
+                                    //   "Contailners",
+                                    //   style: TextStyle(color: Colors.white),
+                                    // ),
+                                    // Text(
+                                    //   "Contailners",
+                                    //   style: TextStyle(color: Colors.white),
+                                    // ),
                                   ],
                                 )
                               : SizedBox();

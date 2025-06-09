@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:meta/meta.dart';
 import 'package:http/http.dart' as http;
 import 'package:path_provider/path_provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 
 
@@ -206,4 +207,38 @@ class MainScreenCubit extends Cubit<MainScreenState> {
       emit(ImageDownloadError('Error: $e'));
     }
   }
+
+
+
+
+  Future<void> addItemToRecentList(String newItem) async {
+    final prefs = await SharedPreferences.getInstance();
+
+    // Load existing list
+    List<String> itemList = prefs.getStringList('myList') ?? [];
+
+    // Save the updated list
+    if (!itemList.contains(newItem)) {
+      itemList.add(newItem);
+      await prefs.setStringList('myList', itemList);
+    }
+    emit(RecentItemAdded());
+  }
+
+ List<String> recentSearches = [];
+
+  Future<void> getRecentList() async {
+    final prefs = await SharedPreferences.getInstance();
+    final storedItems = prefs.getStringList('myList') ?? [];
+    recentSearches = storedItems;
+  }
+
+  void removeRecentItem(int index) async {
+    recentSearches.removeAt(index);
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setStringList('myList', recentSearches);
+    emit(RecentItemRemoved()); // Create this state
+  }
+
+
 }

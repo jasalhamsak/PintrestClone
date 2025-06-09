@@ -21,3 +21,6 @@ class ImageDownloadError extends MainScreenState {
   final String error;
   ImageDownloadError(this.error);
 }
+
+class RecentItemAdded extends MainScreenState {}
+class RecentItemRemoved extends MainScreenState {}
